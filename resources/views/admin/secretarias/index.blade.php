@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="row">
-  <h1>Listado de usuarios</h1>
+  <h1>Listado de secretarias</h1>
 </div>
 
 <hr>
@@ -10,10 +10,10 @@
   <div class="col-md-10">
             <div class="card card-outline card-primary">
               <div class="card-header">
-                <h3 class="card-title">Usuarios registrados</h3>
+                <h3 class="card-title">Secretarias registrados</h3>
 
                 <div class="card-tools">
-                  <a href="{{ url('admin/usuarios/create') }}" class="btn btn-primary">
+                  <a href="{{ url('admin/secretarias/create') }}" class="btn btn-primary">
                     Registrar nuevo
                   </a>
                 </div>
@@ -25,23 +25,28 @@
   <thead style="background-color: #c0c0c0">
     <tr>
       <td style="text-align: center"><b>Nro</b></td>
-      <td style="text-align: center"><b>Nombre</b></td>
+      <td style="text-align: center"><b>Nombres</b></td>
+      <td style="text-align: center"><b>Apellidos</b></td>
+      <td style="text-align: center"><b>CC</b></td>
+      <td style="text-align: center"><b>Celular</b></td>
+      <td style="text-align: center"><b>Fecha de nacimiento</b></td>
+      <td style="text-align: center"><b>dirección</b></td>
       <td style="text-align: center"><b>Email</b></td>
       <td style="text-align: center"><b>Acciones</b></td>
     </tr>
   </thead>
   <tbody>
     <?php $contador = 1; ?>
-      @foreach($usuarios as $usuario)
+      @foreach($secretarias as $secretaria)
   <tr>
   <td style="text-align: center">{{$contador++}}</td>
-  <td>{{$usuario->name}}</td>
-  <td>{{$usuario->email}}</td>
+  <td>{{$secretaria->nombres}}</td>
+  <td>{{$secretaria->Apellidos}}</td>
   <td style="text-align: center">
   <div class="btn-group" role="group" aria-label="Basic example">
-  <a href="{{ url('admin/usuarios/'.$usuario->id)}}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
-  <a href="{{url('admin/usuarios/'.$usuario->id.'/edit')}}" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-  <a href="{{url('admin/usuarios/'.$usuario->id.'/confirm-delete')}}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+  <a href="{{ url('admin/secretarias/'.$secretaria->id)}}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
+  <a href="{{url('admin/secretarias/'.$secretaria->id.'/edit')}}" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
+  <a href="{{url('admin/secretarias/'.$secretaria->id.'/confirm-delete')}}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
 </div>  
 </td>
 </tr>
@@ -55,14 +60,14 @@
             "language": {
                 "emptyTable": "No hay información",
                 // Agregamos guiones bajos a las variables: _START_, _END_ y _TOTAL_
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
-                "infoEmpty": "Mostrando 0 a 0 de 0 Usuarios",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Secretarias",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Secretarias",
                 // Agregamos guiones bajos a _MAX_
-                "infoFiltered": "(Filtrado de _MAX_ total Usuarios)",
+                "infoFiltered": "(Filtrado de _MAX_ total Secretarias)",
                 "infoPostFix": "",
                 "thousands": ",",
                 // Agregamos guiones bajos a _MENU_
-                "lengthMenu": "Mostrar _MENU_ Usuarios",
+                "lengthMenu": "Mostrar _MENU_ Secretarias",
                 "loadingRecords": "Cargando...",
                 "processing": "Procesando...",
                 "search": "Buscador:",
