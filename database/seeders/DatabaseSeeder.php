@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;                    // <--- AÑADE ESTA LÍNEA
 use Illuminate\Support\Facades\Hash;    // <--- AÑADE ESTA LÍNEA
+use App\Models\Paciente; // <--- AGREGA ESTA LÍNEA
 
 class DatabaseSeeder extends Seeder
 {
@@ -44,5 +45,7 @@ class DatabaseSeeder extends Seeder
             'email'=>'paciente1@admin.com',
             'password'=>Hash::make('12345678')
         ]);
+
+        $this->call([PacienteSeeder::class,]);
     }
 }
