@@ -153,6 +153,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
 
           <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas bi bi-hospital"></i>
+              <p>
+                Consultorio
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{url('admin/consultorios/create')}}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Creacion de consultorios</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('admin/consultorios')}}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Listado de consultorios</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
             <a href="#" class="nav-link" style="background-color: red">
               <i class="nav-icon fas bi bi-door-closed"></i>
               <p>

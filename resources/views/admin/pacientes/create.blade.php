@@ -39,11 +39,11 @@
     <div class="form-group">
         <label for="tipo_documento">Tipo documento</label><b>*</b>
         <select name="tipo_documento" class="form-control" required>
-            <option value="CC" {{ old('tipo_documento') == 'CC' ? 'selected' : '' }}>Cédula de Ciudadanía (CC)</option>
-            <option value="TI" {{ old('tipo_documento') == 'TI' ? 'selected' : '' }}>Tarjeta de Identidad (TI)</option>
-            <option value="CE" {{ old('tipo_documento') == 'CE' ? 'selected' : '' }}>Cédula de Extranjería (CE)</option>
-            <option value="PASAPORTE" {{ old('tipo_documento') == 'PASAPORTE' ? 'selected' : '' }}>Pasaporte</option>
-            <option value="RC" {{ old('tipo_documento') == 'RC' ? 'selected' : '' }}>Registro Civil (RC)</option>
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="PASAPORTE">Pasaporte</option>
+            <option value="RC">Registro Civil</option>
         </select>
         @error('tipo_documento')
             <small style="color:red">{{$message}}</small>
