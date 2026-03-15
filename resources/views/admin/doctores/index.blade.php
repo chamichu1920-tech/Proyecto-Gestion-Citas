@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="row">
-  <h1>Listado de consultorios</h1>
+  <h1>Listado de doctores</h1>
 </div>
 
 <hr>
@@ -10,10 +10,10 @@
   <div class="col-md-12">
             <div class="card card-outline card-primary">
               <div class="card-header">
-                <h3 class="card-title">Consultorios registrados</h3>
+                <h3 class="card-title">Doctores registrados</h3>
 
                 <div class="card-tools">
-                  <a href="{{ url('admin/consultorios/create') }}" class="btn btn-primary">
+                  <a href="{{ url('admin/doctores/create') }}" class="btn btn-primary">
                     Registrar nuevo
                   </a>
                 </div>
@@ -25,31 +25,29 @@
   <thead style="background-color: #c0c0c0">
     <tr>
       <td style="text-align: center"><b>Nro</b></td>
-      <td style="text-align: center"><b>Consultorio</b></td>
-      <td style="text-align: center"><b>Ubicacíon</b></td>
-      <td style="text-align: center"><b>Capacidad</b></td>
+      <td style="text-align: center"><b>Nombres y apellidos</b></td>
       <td style="text-align: center"><b>Telefono</b></td>
+      <td style="text-align: center"><b>Licencia medica</b></td>
       <td style="text-align: center"><b>Especialidad</b></td>
-      <td style="text-align: center"><b>Estado</b></td>
+      <td style="text-align: center"><b>Email</b></td>
       <td style="text-align: center"><b>Acciones</b></td>
     </tr>
   </thead>
   <tbody>
     <?php $contador = 1; ?>
-      @foreach($consultorios as $consultorio)
+      @foreach($doctores as $doctore)
   <tr>
   <td style="text-align: center">{{$contador++}}</td>
-  <td>{{$consultorio->nombre}}</td>
-  <td>{{$consultorio->ubicacíon}}</td>
-  <td>{{$consultorio->capacidad}}</td>
-  <td>{{$consultorio->telefono}}</td>
-  <td>{{$consultorio->especialidad}}</td>
-  <td>{{$consultorio->estado}}</td>
+  <td>{{$doctore->nombre."".$doctore->apellidos}}</td>
+  <td>{{$doctore->telefono}}</td>
+  <td>{{$doctore->licencia_medica}}</td>
+  <td>{{$doctore->especialidad}}</td>
+  <td>{{$doctore->user->email}}</td>
   <td style="text-align: center">
   <div class="btn-group" role="group" aria-label="Basic example">
-  <a href="{{ url('admin/consultorios/'.$consultorio->id)}}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
-  <a href="{{url('admin/consultorios/'.$consultorio->id.'/edit')}}" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
-  <a href="{{url('admin/consultorios/'.$consultorio->id.'/confirm-delete')}}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+  <a href="{{ url('admin/doctores/'.$doctore->id)}}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i></a>
+  <a href="{{url('admin/doctores/'.$doctore->id.'/edit')}}" type="button" class="btn btn-success btn-sm"><i class="bi bi-pencil"></i></a>
+  <a href="{{url('admin/doctores/'.$doctore->id.'/confirm-delete')}}" type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
 </div>  
 </td>
 </tr>
@@ -63,14 +61,14 @@
             "language": {
                 "emptyTable": "No hay información",
                 // Agregamos guiones bajos a las variables: _START_, _END_ y _TOTAL_
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Consultorios",
-                "infoEmpty": "Mostrando 0 a 0 de 0 Consultorios",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Doctores",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Doctores",
                 // Agregamos guiones bajos a _MAX_
-                "infoFiltered": "(Filtrado de _MAX_ total Consultorios)",
+                "infoFiltered": "(Filtrado de _MAX_ total Doctores)",
                 "infoPostFix": "",
                 "thousands": ",",
                 // Agregamos guiones bajos a _MENU_
-                "lengthMenu": "Mostrar _MENU_ Consultorios",
+                "lengthMenu": "Mostrar _MENU_ Doctores",
                 "loadingRecords": "Cargando...",
                 "processing": "Procesando...",
                 "search": "Buscador:",

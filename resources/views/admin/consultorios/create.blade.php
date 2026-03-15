@@ -27,7 +27,7 @@
 
                   <div class="col-md-3">
                     <div class="form group">
-                      <label for="">Ubicacíon</label><b>*</b>
+                      <label for="">Ubicación</label><b>*</b>
                       <input type="text" value="{{old('ubicacion')}}" name="ubicacion" class="form-control" required>
                      @error('ubicacion')
                         <small style="color:red">{{$message}}</small>
@@ -80,7 +80,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form group">
-                      <a href="{{url('admin/pacientes')}}" class="btn btn-secondary">Cancelar</a>
+                      <a href="{{url('admin/consultorios')}}" class="btn btn-secondary">Cancelar</a>
                       <button type="submit" class="btn btn-primary">Registrar consultorio</button>
                   </div>
                   </div>

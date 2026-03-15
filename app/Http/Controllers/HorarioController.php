@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Horario;
 use Illuminate\Http\Request;
+use App\Models\Doctor;
+use App\Models\Consultorio;
 
 class HorarioController extends Controller
 {
@@ -12,7 +14,8 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        //
+        $horarios = Horario::with('doctor','consultorio')->get();
+        return view('admin.horarios.index', compact('horarios'));
     }
 
     /**
@@ -20,7 +23,9 @@ class HorarioController extends Controller
      */
     public function create()
     {
-        //
+        $consultorios = Consultorio::all();
+        $doctores = Doctor::all();
+        return view('admin.horarios.create', compact('doctores','consultorios'));
     }
 
     /**
@@ -28,15 +33,29 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$datos = request()->all();
+        //return response()->json($datos);
+
+        $request->validate([
+            'dia' => 'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
+        ]);
+
+        Horario::create ($request->all());
+
+         return redirect()->route('admin.horarios.index')
+        ->with('mensaje', 'Se registró el horario de manera correcta')
+        ->with('icono', 'success');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Horario $horario)
+    public function show($id)
     {
-        //
+        $horario = Horario::find($id);
+        return view('admin.horarios.show', compact('horario'));
     }
 
     /**

@@ -85,8 +85,7 @@
                         <option value="F">FEMENINO </option>
                         <option value="M">MASCULINO</option>
                         @endif 
-                        <option value="M">MASCULINO</option>
-                        <option value="F">FEMENINO </option>
+                      
                     </select>
                   </div>
                   </div>

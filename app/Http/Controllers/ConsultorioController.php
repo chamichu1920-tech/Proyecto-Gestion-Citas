@@ -51,32 +51,59 @@ class ConsultorioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Consultorio $consultorio)
+    public function show($id)
     {
-        //
+        $consultorio = Consultorio::findOrFail($id);
+        return view('admin.consultorios.show', compact('consultorio'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Consultorio $consultorio)
+    public function edit($id)
     {
-        //
+        $consultorio = Consultorio::findOrFail($id);
+        return view('admin.consultorios.edit', compact('consultorio'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Consultorio $consultorio)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'ubicacion' => 'required',
+            'especialidad' => 'required',
+            'estado' => 'required',
+            
+    ]);
+
+        $consultorio = Consultorio::find($id);
+        $consultorio->update($request->all());
+
+         return redirect()->route('admin.consultorios.index')
+        ->with('mensaje', 'Se actualizo al consultorio de manera correcta')
+        ->with('icono', 'success');
+    }
+
+    public function confirmDelete($id){
+
+        $consultorio = Consultorio::findOrFail($id);
+        return view('admin.consultorios.delete', compact('consultorio'));
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Consultorio $consultorio)
+    public function destroy($id)
     {
-        //
+        $consultorio = Consultorio::find($id);
+        $consultorio->delete();
+
+        return redirect()->route('admin.consultorios.index')
+        ->with('mensaje', 'Se elimino al consultorio de manera correcta')
+        ->with('icono', 'success');
     }
 }

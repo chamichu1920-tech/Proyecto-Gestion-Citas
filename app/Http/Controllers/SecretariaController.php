@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Secretaria;
-use App\Models\User;
+use App\Models\User;//se agrego esta linea
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;//se agrego esta linea
 
 class SecretariaController extends Controller
 {
