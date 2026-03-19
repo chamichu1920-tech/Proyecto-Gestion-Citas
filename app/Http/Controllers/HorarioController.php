@@ -14,8 +14,9 @@ class HorarioController extends Controller
      */
     public function index()
     {
+        $consultorios = Consultorio::all();
         $horarios = Horario::with('doctor','consultorio')->get();
-        return view('admin.horarios.index', compact('horarios'));
+        return view('admin.horarios.index', compact('horarios','consultorios'));
     }
 
     /**
@@ -25,7 +26,18 @@ class HorarioController extends Controller
     {
         $consultorios = Consultorio::all();
         $doctores = Doctor::all();
-        return view('admin.horarios.create', compact('doctores','consultorios'));
+        $horarios = Horario::with('doctor','consultorio')->get();
+        return view('admin.horarios.create', compact('doctores','consultorios','horarios'));
+    }
+
+    public function cargar_datos_consultorios($id){
+        try{
+            $horarios = Horario::with('doctor','consultorio')->where('consultorio_id',$id)->get();
+            //print_r($horarios);
+            return view('admin.horarios.cargar_datos_consultorios',compact('horarios'));
+        }catch(\Exception $exception){
+            return response()->json(['mensaje'=> 'Error']);
+        }
     }
 
     /**
@@ -36,11 +48,39 @@ class HorarioController extends Controller
         //$datos = request()->all();
         //return response()->json($datos);
 
+        //Validar los datos del formulario
         $request->validate([
             'dia' => 'required',
-            'hora_inicio' => 'required',
-            'hora_fin' => 'required',
+            'hora_inicio' => 'required|date_format:H:i',
+            'hora_fin' => 'required|date_format:H:i|after:hora_inicio',
+            'consultorio_id' => 'required|exists:consultorios,id', //validar que el consultorio exista
         ]);
+
+        //Verificar si el horario ya existe para ese dia, rango de horas y consultorio
+        $horarioExistente = Horario::where('dia',$request->dia)
+        ->where('consultorio_id', $request->consultorio_id) //filtar por consultorio
+        ->where(function ($query) use ($request){
+            $query->where(function ($query) use ($request){
+                $query->where('hora_inicio', '>=', $request->hora_inicio)
+                ->where('hora_inicio', '<', $request->hora_fin);
+            })
+            ->orWhere(function ($query) use ($request){
+                $query->where('hora_fin', '>', $request->hora_inicio)
+                ->where('hora_fin', '<', $request->hora_fin);
+            })
+            ->orWhere(function ($query) use ($request){
+                $query->where('hora_inicio','<', $request->hora_inicio);
+
+            });
+        })
+        ->exists();
+
+        if ($horarioExistente) {
+            return redirect()->back()
+            ->withInput()
+            ->with('mensaje', 'Ya existe un horario que se superpone con el horario ingresado')
+            ->with('icono', 'error');
+        }
 
         Horario::create ($request->all());
 

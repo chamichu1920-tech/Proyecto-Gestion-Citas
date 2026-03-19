@@ -113,50 +113,48 @@
           <div class="col-md-12">
             <div class="card card-outline card-primary">
               <dv class="card-header">
-                <h3 class="card-tittle">Calendario de atención de doctores</h3>
+                <div class="row">
+                  <div class="col-md-6"><h3 class="card-tittle">Calendario de atención de doctores</h3></div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <label for="consultorio_id">Consultorios</label>
+                                <select name="consultorio_id" id="consultorio_select" class="form-control" required>
+                                    @foreach($consultorios as $consultorio)
+                                        <option value="{{$consultorio->id}}">
+                                            {{$consultorio->nombre . " - " . $consultorio->ubicacion}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                    </div>
+                  </div>
+               </div>
               </dv>
               <div class="card-body">
-                <table style="font-size: 15px" class="table table-striped table-hover table-sm table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Hora</th>
-                      <th>Lunes</th>
-                      <th>Martes</th>
-                      <th>Miercoles</th>
-                      <th>Jueves</th>
-                      <th>Viernes</th>
-                      <th>Sabado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @php
-                    $horas = ['06:00:00 - 07:00:00','07:00:00 - 08:00:00','08:00:00 - 09:00:00','09:00:00 - 10:00:00','10:00:00 - 11:00:00','11:00:00 - 12:00:00','14:00:00 - 15:00:00','15:00:00 - 16:00:00','16:00:00 - 17:00:00','17:00:00 - 18:00:00'];
-                    $diaSemana = ['LUNES','MARTES','MIERCOLES','JUEVES','VIERNES','SABADO'];
-                    @endphp
-                    @foreach ($horas as $hora)
-                    @php
-                    list($hora_inicio,$hora_fin) = explode(' - ', $hora);
-                    @endphp
-                    <tr>
-                    <td>{{$hora}}</td>
-                    @foreach ($diaSemana as $dia)
-                    @php
-                    $nombre_doctor = '';
-                    foreach ($horarios as $horario) {
-                      if(strtoupper($horario->dia) == $dia &&
-                      $hora_inicio >= $horario->hora_inicio &&
-                      $hora_fin <= $horario->hora_fin){
-                      $nombre_doctor = $horario->doctor->nombres."".$horario->doctor->apellidos;
-                      break;
+                <script>
+                  $('#consultorio_select').on('change', function () {
+                  var consultorio_id = $('#consultorio_select').val();  
+                  //alert(consultorio_id);
+                  var url = "{{route('admin.horarios.cargar_datos_consultorios',':id')}}";
+                  url = url.replace(':id',consultorio_id);
+                  if(consultorio_id){
+                    $.ajax({
+                      url: url,
+                      type: 'GET',
+                      success: function (data) {
+                        $('#consultorio_info').html(data);
+                      },
+                      error: function () {
+                        alert('Error al obtener los datos del consultorio');
                       }
-                    }
-                    @endphp
-                    <td>{{$nombre_doctor}}</td>
-                    @endforeach
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+                    });
+                  }else{
+                    $('#consultorio_info').html('');
+                  }
+                  });
+                </script>
+                <hr>
+                <div id="consultorio_info">
+                </div>
               </div>
             </div>
           </div>
