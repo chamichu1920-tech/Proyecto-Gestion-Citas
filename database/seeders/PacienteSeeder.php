@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Paciente; // <--- AÑADE ESTA LÍNEA AQUÍ
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Paciente; // <--- AÑADE ESTA LÍNEA AQUÍ
+
 
 class PacienteSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class PacienteSeeder extends Seeder
      */
     public function run(): void
     {
-        Paciente::factory()->count(200)->create();
+        Paciente::factory()->count(200)->create()->each(function ($user){
+            $user->assignRole('paciente');
+        });
     }
 }

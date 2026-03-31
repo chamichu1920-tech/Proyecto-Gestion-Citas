@@ -119,6 +119,7 @@
                     <div class="row">
                       <label for="consultorio_id">Consultorios</label>
                                 <select name="consultorio_id" id="consultorio_select" class="form-control" required>
+                                  <option value="">Seleccione un consultorio...</option>
                                     @foreach($consultorios as $consultorio)
                                         <option value="{{$consultorio->id}}">
                                             {{$consultorio->nombre . " - " . $consultorio->ubicacion}}

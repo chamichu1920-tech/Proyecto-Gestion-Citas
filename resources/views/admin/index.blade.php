@@ -1,10 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 <div class="row">
-  <h1>Panel principal</h1>
+  <h1>Bienvenido: {{Auth::user()->name}} </h1>
 </div>
 <hr>
 <div class="row">
+
+@can('admin.usuarios.index')
+
   <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
@@ -18,7 +21,9 @@
               <a href="{{url('admin/usuarios')}}" class="small-box-footer">Mas informacíon <i class="fas bi bi-file-person"></i></a>
             </div>
           </div>
+          @endcan
 
+          @can('admin.secretarias.index')
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-primary">
@@ -32,7 +37,9 @@
               <a href="{{url('admin/secretarias')}}" class="small-box-footer">Mas informacíon <i class="fas bi bi-file-person"></i></a>
             </div>
           </div>
+          @endcan
 
+          @can('admin.pacientes.index')
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -46,7 +53,9 @@
               <a href="{{url('admin/pacientes')}}" class="small-box-footer">Mas informacíon <i class="fas bi bi-file-person"></i></a>
             </div>
           </div>
+          @endcan
 
+          @can('admin.consultorios.index')
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-warning">
@@ -60,7 +69,9 @@
               <a href="{{url('admin/consultorios')}}" class="small-box-footer">Mas informacíon <i class="fas bi bi-file-person"></i></a>
             </div>
           </div>
+          @endcan
 
+          @can('admin.doctores.index')
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-danger">
@@ -74,7 +85,9 @@
               <a href="{{url('admin/doctores')}}" class="small-box-footer">Mas informacíon <i class="fas bi bi-file-person"></i></a>
             </div>
           </div>
+          @endcan
 
+          @can('admin.horarios.index')
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-secondary">
@@ -88,6 +101,7 @@
               <a href="{{url('admin/horarios')}}" class="small-box-footer">Mas informacíon <i class="fas bi bi-file-person"></i></a>
             </div>
           </div>
+          @endcan
 
 </div>
 @endsection

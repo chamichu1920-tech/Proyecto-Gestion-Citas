@@ -40,7 +40,7 @@
   <tr>
   <td style="text-align: center">{{$contador++}}</td>
   <td>{{$consultorio->nombre}}</td>
-  <td>{{$consultorio->ubicacíon}}</td>
+  <td>{{$consultorio->ubicacion}}</td>
   <td>{{$consultorio->capacidad}}</td>
   <td>{{$consultorio->telefono}}</td>
   <td>{{$consultorio->especialidad}}</td>
