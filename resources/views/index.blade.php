@@ -57,6 +57,7 @@ FACEBOOK: https://www.facebook.com/themefisher
   
   <!--Favicon-->
   <link rel="icon" href="{{ asset('medic/images/favicon.png') }}" type="image/x-icon">
+
 </head>
 
 
@@ -211,7 +212,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 ==================================-->
 <div class="hero-slider">
   <!-- Slider Item -->
-  <div class="slider-item slide1" style="background-image:url(images/slider/slider-bg-1.jpg)">
+  <div class="slider-item slide1" style="background-image: url({{ asset('medic/images/slider/slider-bg-1.jpg') }});">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -219,7 +220,7 @@ FACEBOOK: https://www.facebook.com/themefisher
           <div class="content style text-center">
             <h2 class="text-white text-bold mb-2" data-animation-in="slideInLeft">Bienvenidos</h2>
             <p class="tag-text mb-4" data-animation-in="slideInRight">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sunt animi sequi ratione quod at earum. <br> Quis quos officiis numquam!</p>
-            <a href="about.html" class="btn btn-main btn-white" data-animation-in="slideInLeft" data-duration-in="1.2">Reserva tu cita</a>
+            <a href="{{url('/admin')}}" class="btn btn-main btn-white" data-animation-in="slideInLeft" data-duration-in="1.2">Reserva tu cita</a>
           </div>
           <!-- Slide Content End -->
         </div>
@@ -227,23 +228,24 @@ FACEBOOK: https://www.facebook.com/themefisher
     </div>
   </div>
   <!-- Slider Item -->
-  <div class="slider-item" style="background-image:url(images/slider/slider-bg-2.jpg);">
+
+  <div class="slider-item" style="background-image: url({{ asset('medic/images/slider/slider-bg-2.jpg') }});">
     <div class="container">
       <div class="row">
         <div class="col-12">
           <!-- Slide Content Start-->
-          <div class="content style text-center">
+  <div class="content style text-center">
             <h2 class="text-white" data-animation-in="slideInRight">We Care About Your Health</h2>
             <p class="tag-text mb-4" data-animation-in="slideInRight" data-duration-in="0.6">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
             <a href="about.html" class="btn btn-main btn-white" data-animation-in="slideInRight" data-duration-in="1.2">about us</a>
-          </div>
+          </div>     
           <!-- Slide Content End-->
         </div>
       </div>
     </div>
   </div>
   <!-- Slider Item -->
-  <div class="slider-item" style="background-image:url(images/slider/slider-bg-3.jpg)">
+  <div class="slider-item" style="background-image: url({{ asset('medic/images/slider/slider-bg-3.jpg') }});">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -261,6 +263,70 @@ FACEBOOK: https://www.facebook.com/themefisher
 </div>
 
 <!--====  End of Page Slider  ====-->
+   <div class="container>">
+    <div class="row">
+          <div class="col-md-12">
+            <div class="card card-outline card-primary">
+              <dv class="card-header">
+                <div class="row">
+                  <div class="col-md-6"><h3 class="card-tittle">Calendario de atención de doctores</h3></div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <label for="consultorio_id">Consultorios</label>
+                                <select name="consultorio_id" id="consultorio_select" class="form-control" required>
+                                  <option value="">Seleccione un consultorio...</option>
+                                    @foreach($consultorios as $consultorio)
+                                        <option value="{{$consultorio->id}}">
+                                            {{$consultorio->nombre . " - " . $consultorio->ubicacion}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                    </div>
+                  </div>
+               </div>
+              </dv>
+              <div class="card-body">
+                <script>
+    // Usamos esta función para esperar a que jQuery esté cargado
+    window.onload = function() {
+        if (window.jQuery) {
+            console.log("jQuery cargado correctamente dentro del script");
+            
+            $('#consultorio_select').on('change', function () {
+                var consultorio_id = $(this).val();
+                if (consultorio_id) {
+                    var url = "{{ route('cargar_datos_consultorios', ':id') }}";
+                    url = url.replace(':id', consultorio_id);
+                    
+                    //alert("Consultorio detectado: " + consultorio_id);
+
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function (data) {
+                            $('#consultorio_info').html(data);
+                        },
+                        error: function () {
+                            alert('Error al obtener los datos');
+                        }
+                    });
+                } else {
+                    $('#consultorio_info').html('');
+                }
+            });
+        } else {
+            console.error("jQuery aún no carga. Revisa las rutas en el footer.");
+        }
+    };
+</script>
+                <hr>
+                <div id="consultorio_info">
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+</div>
 
 <section class="cta">
   <div class="container">
@@ -307,7 +373,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<div class="item">
 								<div class="icon-box">
 									<figure>
-										<a href="services.html"><img loading="lazy" src="images/resource/1.png" alt="features image"></a>
+										<a href="services.html"><img loading="lazy" src="{{ asset('medic/images/') }}/resource/1.png" alt="features image"></a>
 									</figure>
 								</div>
 								<h3 class="mb-2">Orthopedics</h3>
@@ -321,7 +387,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 								<div class="icon-box">
 									<figure>
 										<a href="services.html">
-											<img loading="lazy" src="images/resource/2.png" alt="features image">
+											<img loading="lazy" src="{{ asset('medic/images/') }}/resource/2.png" alt="features image">
 										</a>
 									</figure>
 								</div>
@@ -336,7 +402,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 								<div class="icon-box">
 									<figure>
 										<a href="services.html">
-											<img loading="lazy" src="images/resource/3.png" alt="features image">
+											<img loading="lazy" src="{{ asset('medic/images/') }}/resource/3.png" alt="features image">
 										</a>
 									</figure>
 								</div>
@@ -351,7 +417,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 								<div class="icon-box">
 									<figure>
 										<a href="services.html">
-											<img loading="lazy" src="images/resource/4.png" alt="features image">
+											<img loading="lazy" src="{{ asset('medic/images/') }}/resource/4.png" alt="features image">
 										</a>
 									</figure>
 								</div>
@@ -400,7 +466,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="service-box tab-pane fade show active" id="dormitory">
               <div class="row">
                 <div class="col-lg-6">
-                  <img loading="lazy" class="img-fluid" src="images/services/service-one.jpg" alt="service-image">
+                  <img loading="lazy" class="img-fluid" src="{{ asset('medic/images/') }}/services/service-one.jpg" alt="service-image">
                 </div>
                 <div class="col-lg-6">
                   <div class="contents">
@@ -436,7 +502,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="service-box tab-pane fade" id="orthopedic">
               <div class="row">
                 <div class="col-lg-6">
-                  <img loading="lazy" class="img-fluid" src="images/services/service-two.jpg" alt="service-image">
+                  <img loading="lazy" class="img-fluid" src="{{ asset('medic/images/') }}/services/service-two.jpg" alt="service-image">
                 </div>
                 <div class="col-lg-6">
                   <div class="contents">
@@ -472,7 +538,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="service-box tab-pane fade" id="sonogram">
               <div class="row">
                 <div class="col-lg-6">
-                  <img loading="lazy" class="img-fluid" src="images/services/service-three.jpg" alt="service-image">
+                  <img loading="lazy" class="img-fluid" src="{{ asset('medic/images/') }}/services/service-three.jpg" alt="service-image">
                 </div>
                 <div class="col-lg-6">
                   <div class="contents">
@@ -508,7 +574,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="service-box tab-pane fade" id="x-ray">
               <div class="row">
                 <div class="col-lg-6">
-                  <img loading="lazy" class="img-fluid" src="images/services/service-four.jpg" alt="service-image">
+                  <img loading="lazy" class="img-fluid" src="{{ asset('medic/images/') }}/services/service-four.jpg" alt="service-image">
                 </div>
                 <div class="col-lg-6">
                   <div class="contents">
@@ -544,7 +610,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="service-box tab-pane fade" id="diagnostic">
               <div class="row">
                 <div class="col-lg-6">
-                  <img loading="lazy" class="img-fluid" src="images/services/service-five.jpg" alt="service-image">
+                  <img loading="lazy" class="img-fluid" src="{{ asset('medic/images/') }}/services/service-five.jpg" alt="service-image">
                 </div>
                 <div class="col-lg-6">
                   <div class="contents">
@@ -601,7 +667,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box">
               <div class="img_holder">
                 <a href="service.html">
-                  <img loading="lazy" src="images/gallery/1.jpg" alt="images" class="img-fluid">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/gallery/1.jpg" alt="images" class="img-fluid">
                 </a>
               </div>
               <div class="image-content text-center">
@@ -617,7 +683,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box">
               <div class="img_holder">
                 <a href="service.html">
-                  <img loading="lazy" src="images/gallery/2.jpg" alt="images" class="img-fluid">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/gallery/2.jpg" alt="images" class="img-fluid">
                 </a>
               </div>
               <div class="image-content text-center">
@@ -633,7 +699,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box">
               <div class="img_holder">
                 <a href="service.html">
-                  <img loading="lazy" src="images/gallery/3.jpg" alt="images" class="img-fluid">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/gallery/3.jpg" alt="images" class="img-fluid">
                 </a>
               </div>
               <div class="image-content text-center">
@@ -649,7 +715,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box">
               <div class="img_holder">
                 <a href="service.html">
-                  <img loading="lazy" src="images/gallery/1.jpg" alt="images" class="img-fluid">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/gallery/1.jpg" alt="images" class="img-fluid">
                 </a>
               </div>
               <div class="image-content text-center">
@@ -665,7 +731,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box">
               <div class="img_holder">
                 <a href="service.html">
-                  <img loading="lazy" src="images/gallery/2.jpg" alt="images" class="img-fluid">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/gallery/2.jpg" alt="images" class="img-fluid">
                 </a>
               </div>
               <div class="image-content text-center">
@@ -681,7 +747,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box">
               <div class="img_holder">
                 <a href="service.html">
-                  <img loading="lazy" src="images/gallery/3.jpg" alt="images" class="img-fluid">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/gallery/3.jpg" alt="images" class="img-fluid">
                 </a>
               </div>
               <div class="image-content text-center">
@@ -713,7 +779,7 @@ FACEBOOK: https://www.facebook.com/themefisher
     <div class="row justify-content-center">
       <div class="col-lg-4 col-md-6">
         <div class="team-member">
-          <img loading="lazy" src="images/team/doctor-2.jpg" alt="doctor" class="img-fluid">
+          <img loading="lazy" src="{{ asset('medic/images/') }}/team/doctor-2.jpg" alt="doctor" class="img-fluid">
           <div class="contents text-center">
             <h4>Dr. Robert Barrethion</h4>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, aspernatur.</p>
@@ -723,7 +789,7 @@ FACEBOOK: https://www.facebook.com/themefisher
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="team-member">
-          <img loading="lazy" src="images/team/doctor-lab-3.jpg" alt="doctor" class="img-fluid">
+          <img loading="lazy" src="{{ asset('medic/images/') }}/team/doctor-lab-3.jpg" alt="doctor" class="img-fluid">
           <div class="contents text-center">
             <h4>Dr. Marry Lou</h4>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, aspernatur.</p>
@@ -733,7 +799,7 @@ FACEBOOK: https://www.facebook.com/themefisher
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="team-member">
-          <img loading="lazy" src="images/team/event-2.jpg" alt="doctor" class="img-fluid">
+          <img loading="lazy" src="{{ asset('medic/images/') }}/team/event-2.jpg" alt="doctor" class="img-fluid">
           <div class="contents text-center">
             <h4>Dr. Sansa Stark</h4>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, aspernatur.</p>
@@ -747,7 +813,7 @@ FACEBOOK: https://www.facebook.com/themefisher
 <!--End team section-->
 
 <!--testimonial-section-->
-<section class="testimonial-section" style="background: url(images/testimonials/1.jpg);">
+<section class="testimonial-section" style="background: url({{ asset('medic/images/testimonials/1.jpg') }});">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -766,7 +832,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/1.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/testimonials/1.png') }}" alt="">
                 </figure>
               </div>
               <h6>Adam Rose</h6>
@@ -779,7 +845,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/2.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/2.png" alt="">
                 </figure>
               </div>
               <h6>David Warner</h6>
@@ -792,7 +858,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/3.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/3.png" alt="">
                 </figure>
               </div>
               <h6>Amy Adams</h6>
@@ -805,7 +871,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/1.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/1.png" alt="">
                 </figure>
               </div>
               <h6>Adam Rose</h6>
@@ -818,7 +884,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/2.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/2.png" alt="">
                 </figure>
               </div>
               <h6>David Warner</h6>
@@ -831,7 +897,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/3.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/3.png" alt="">
                 </figure>
               </div>
               <h6>Amy Adams</h6>
@@ -844,7 +910,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/1.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/1.png" alt="">
                 </figure>
               </div>
               <h6>Adam Rose</h6>
@@ -857,7 +923,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/2.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/2.png" alt="">
                 </figure>
               </div>
               <h6>David Warner</h6>
@@ -870,7 +936,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="inner-box text-center">
               <div class="image-box">
                 <figure>
-                  <img loading="lazy" src="images/testimonials/3.png" alt="">
+                  <img loading="lazy" src="{{ asset('medic/images/') }}/testimonials/3.png" alt="">
                 </figure>
               </div>
               <h6>Amy Adams</h6>
@@ -1035,7 +1101,7 @@ FACEBOOK: https://www.facebook.com/themefisher
             <div class="footer-logo">
               <figure>
                 <a href="index.html">
-                  <img loading="lazy" class="img-fluid" src="images/logo-2.png" alt="medic">
+                  <img loading="lazy" class="img-fluid" src="{{ asset('medic/images/logo-2.png') }}" alt="medic">
                 </a>
               </figure>
             </div>
@@ -1097,7 +1163,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                 <div class="media">
                   <div class="media-left mr-3">
                     <a href="blog-details.html">
-                      <img loading="lazy" src="images/blog/post-thumb-small.jpg" alt="post-thumb">
+                      <img loading="lazy" src="{{ asset('medic/images/') }}/blog/post-thumb-small.jpg" alt="post-thumb">
                     </a>
                   </div>
                   <div class="media-body">
@@ -1110,7 +1176,7 @@ FACEBOOK: https://www.facebook.com/themefisher
                 <div class="media">
                   <div class="media-left mr-3">
                     <a href="blog-details.html">
-                      <img loading="lazy" src="images/blog/post-thumb-small.jpg" alt="post-thumb">
+                      <img loading="lazy" src="{{ asset('medic/images/') }}/blog/post-thumb-small.jpg" alt="post-thumb">
                     </a>
                   </div>
                   <div class="media-body">
@@ -1160,27 +1226,28 @@ FACEBOOK: https://www.facebook.com/themefisher
   <span class="icon fa fa-angle-up"></span>
 </div>
 
+<!--Tuve que cambiar esto para evitar 404 Not Found-->
+<script src="{{ asset('medic/plugins/jquery.min.js') }}"></script>
 
-<!-- jquery -->
-<script src="plugins/jquery.min.js"></script>
-<!-- bootstrap -->
-<script src="plugins/bootstrap/bootstrap.min.js"></script>
-<!-- Slick Slider -->
-<script src="plugins/slick/slick.min.js"></script>
-<script src="plugins/slick/slick-animation.min.js"></script>
-<!-- FancyBox -->
-<script src="plugins/fancybox/jquery.fancybox.min.js" defer></script>
-<!-- Google Map -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
-<script src="plugins/google-map/gmap.js" defer></script>
+<script src="{{ asset('medic/plugins/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ asset('medic/plugins/jquery-ui/jquery-ui.js') }}"></script> 
+<script src="{{ asset('medic/plugins/slick/slick.min.js') }}"></script>
+<script src="{{ asset('medic/plugins/slick/slick-animation.min.js') }}"></script>
+<script src="{{ asset('medic/plugins/fancybox/jquery.fancybox.min.js') }}"></script>
 
-<!-- jquery-ui -->
-<script src="plugins/jquery-ui/jquery-ui.js" defer></script>
-<!-- timePicker -->
-<script src="plugins/timePicker/timePicker.js" defer></script>
+<script src="{{ asset('medic/js/script.js') }}"></script>
 
-<!-- script js -->
-<script src="js/script.js"></script>
+<script>
+    $(document).ready(function() {
+        console.log("Sistema listo y Datepicker cargado.");
+
+        // Tu código del selector de consultorios
+        $('#consultorio_select').on('change', function () {
+            var id = $(this).val();
+            if(id) alert("Consultorio: " + id);
+        });
+    });
+</script>
 </body>
 
 </html>

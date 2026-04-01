@@ -94,7 +94,7 @@
                 </div>
                   <div class="col-md-3">
                     <div class="form group">
-                      <label for="">Password</label><b>*
+                      <label for="">Password</label>
                       <input type="password" value="{{old('password')}}" name="password" class="form-control">
                       @error('password')
                         <small style="color:red">{{$message}}</small>
@@ -103,7 +103,7 @@
                   </div>
                   
                   <div class="col-md-3">
-                    <div class="form group">
+                    <div class="form-group">
                       <label for="">Password verificación</label>
                       <input type="password" name="password_confirmation" class="form-control" >
                       @error('password_confirmation')

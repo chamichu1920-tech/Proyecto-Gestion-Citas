@@ -116,6 +116,8 @@ class DoctorController extends Controller
       }
       $usuario->save();
 
+      $usuario->assignRole('doctor');
+
       return redirect()->route('admin.doctores.index')
         ->with('mensaje', 'Se actualizo al doctor de manera correcta')
         ->with('icono', 'success');
