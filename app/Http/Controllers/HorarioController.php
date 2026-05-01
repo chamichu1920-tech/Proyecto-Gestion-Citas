@@ -115,10 +115,22 @@ class HorarioController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Muestra la vista de confirmación de eliminación.
      */
-    public function destroy(Horario $horario)
+    public function confirmDelete($id)
     {
-        //
+        $horario = Horario::with('doctor', 'consultorio')->findOrFail($id);
+        return view('admin.horarios.delete', compact('horario'));
+    }
+
+    /**
+     * Elimina el registro de la base de datos.
+     */
+    public function destroy($id)
+    {
+        Horario::destroy($id);
+        return redirect()->route('admin.horarios.index')
+            ->with('mensaje', 'Se eliminó el horario de manera correcta')
+            ->with('icono', 'success');
     }
 }

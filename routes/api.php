@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+// IMPORTANTE: Agrega esta línea para que Laravel encuentre tu controlador
+use App\Http\Controllers\SecretariaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Ruta: http://tu-dominio.test/api/v1/secretarias
+Route::post('/v1/secretarias', [SecretariaController::class, 'storeAPI']);
+
+Route::put('/v1/secretarias/{id}', [SecretariaController::class, 'updateAPI']);
+
+Route::delete('/v1/secretarias/{id}', [SecretariaController::class, 'destroyAPI']);
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

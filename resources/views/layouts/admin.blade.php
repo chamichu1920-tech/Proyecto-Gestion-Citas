@@ -87,6 +87,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           @can('admin.usuarios.index')
                <li class="nav-item">
             <a href="#" class="nav-link active">
+              <i class="nav-icon fas bi bi-gear"></i>
+              <p>
+                Configuraciones
+              </p>
+            </a>
+          </li>
+          @endcan
+
+          @can('admin.usuarios.index')
+               <li class="nav-item">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas bi bi-people-fill"></i>
               <p>
                 Usuarios

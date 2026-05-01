@@ -23,6 +23,16 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name'=>'admin.index']);
 
+        // ruta para el admin - configuraciones 
+        Permission::create(['name'=>'admin.configuraciones.index'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.create'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.store'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.show'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.edit'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.update'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.confirmDelete'])->syncRoles([$admin]);
+        Permission::create(['name'=>'admin.configuraciones.destroy'])->syncRoles([$admin]);
+
         // ruta para el admin - usuarios
         Permission::create(['name'=>'admin.usuarios.index'])->syncRoles([$admin]);
         Permission::create(['name'=>'admin.usuarios.create'])->syncRoles([$admin]);
@@ -80,10 +90,20 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>'admin.horarios.show'])->syncRoles([$admin,$secretaria]);
         Permission::create(['name'=>'admin.horarios.edit'])->syncRoles([$admin,$secretaria]);
         Permission::create(['name'=>'admin.horarios.update'])->syncRoles([$admin,$secretaria]);
-        Permission::create(['name'=>'admin.docthorariosores.confirmDelete'])->syncRoles([$admin,$secretaria]);
+        Permission::create(['name'=>'admin.horarios.confirmDelete'])->syncRoles([$admin,$secretaria]);
         Permission::create(['name'=>'admin.horarios.destroy'])->syncRoles([$admin,$secretaria]);
         
         //ajax
         Permission::create(['name'=>'admin.horarios.cargar_datos_consultorios'])->syncRoles([$admin,$secretaria]);
+    
+
+        /// rutas para el usuario
+        //ajax
+        Permission::create(['name'=>'cargar_datos_consultorios'])->syncRoles([$admin,$usuario]);
+        Permission::create(['name'=>'cargar_reserva_doctores'])->syncRoles([$admin,$usuario]);
+        Permission::create(['name'=>'ver_reservas'])->syncRoles([$admin,$usuario]);
+        Permission::create(['name'=>'admin.eventos.create'])->syncRoles([$admin,$usuario]);
+        Permission::create(['name'=>'admin.eventos.destroy'])->syncRoles([$admin,$usuario]);
+
     }
 }

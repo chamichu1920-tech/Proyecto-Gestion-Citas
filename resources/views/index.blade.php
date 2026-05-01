@@ -345,14 +345,14 @@ FACEBOOK: https://www.facebook.com/themefisher
         <a href="service.html" class="btn btn-main">Read more</a>
       </div>
       <div class="col-lg-4 col-md-12 working-time item">
-        <i class="fa fa-hourglass-o"></i>
-        <h2>Working Hours</h2>
-        <ul class="w-hours">
-          <li>Mon - Fri - <span>8:00 - 17:00</span></li>
-          <li>Mon - Fri - <span>8:00 - 17:00</span></li>
-          <li>Mon - Fri - <span>8:00 - 17:00</span></li>
-        </ul>
-      </div>
+    <i class="fa fa-hourglass-o"></i>
+    <h2>Horarios de Atención</h2>
+    <ul class="w-hours">
+        <li>Lunes - Viernes <span>8:00 - 17:00</span></li>
+        <li>Sábados <span>9:00 - 13:00</span></li>
+        <li>Domingos <span>Cerrado</span></li>
+    </ul>
+</div>
     </div>
   </div>
 </section>

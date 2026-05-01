@@ -102,11 +102,31 @@
             </div>
           </div>
           @endcan
+
+          @can('admin.horarios.index')
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{$total_eventos}}</h3>
+                <p>Reservas</p>
+              </div>
+              <div class="icon">
+                <i class="ion fas bi bi-calendar2-check"></i>
+              </div>
+              <a href="" class="small-box-footer"> <i class="fas bi bi-file-person"></i></a>
+            </div>
           </div>
+          @endcan
+
+          </div>
+
+      @can('cargar_datos_consultorios')
+
        <div class="row">
           <div class="col-md-12">
             <div class="card card-outline card-primary">
-              <dv class="card-header">
+              <div class="card-header">
                 <div class="row">
                   <div class="col-md-6"><h3 class="card-tittle">Calendario de atención de doctores</h3></div>
                   <div class="col-md-6">
@@ -123,7 +143,7 @@
                     </div>
                   </div>
                </div>
-              </dv>
+              </div>
               <div class="card-body">
                 <script>
     // Usamos esta función para esperar a que jQuery esté cargado
@@ -174,15 +194,60 @@
                   <div class="col-md-6"><h3 class="card-tittle">Calendario de reserva de citas</h3></div>
                   <div class="col-md-6">
                     <div class="row">
-                      <label for="consultorio_id">Consultorios</label>
-                                <select name="consultorio_id" id="consultorio_select" class="form-control" required>
-                                  <option value="">Seleccione un consultorio...</option>
-                                    @foreach($consultorios as $consultorio)
-                                        <option value="{{$consultorio->id}}">
-                                            {{$consultorio->nombre . " - " . $consultorio->ubicacion}}
+                      <label for="consultorio_id">Doctores</label>
+                                <select name="doctor_id" id="doctor_select" class="form-control" required>
+                                  <option value="">Seleccione su doctor...</option>
+                                    @foreach($doctores as $doctore)
+                                        <option value="{{$doctore->id}}">
+                                            {{$doctore->nombres . "  " . $doctore->apellidos ." - " . $doctore->especialidad}}
                                         </option>
                                     @endforeach
                                 </select>
+                                <script>
+$(document).ready(function() {
+
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        events: [],
+    });
+
+    calendar.render();
+
+    $('#doctor_select').on('change', function () {
+
+        var doctor_id = $(this).val();
+
+        if (doctor_id) {
+
+            var url = "{{ url('/cargar_reserva_doctores/') }}/" + doctor_id;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+
+                    calendar.removeAllEvents(); // 🔥 más limpio
+
+                    calendar.addEventSource(data);
+
+                },
+                error: function () {
+                    alert('Error al obtener las citas del doctor');
+                }
+            });
+
+        } else {
+            calendar.removeAllEvents();
+        }
+
+    });
+
+});
+</script>
                     </div>
                   </div>
               </dv>
@@ -192,6 +257,7 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Registrar cita medica
 </button>
+<a href="{{url('/admin/ver_reservas',Auth::user()->id)}}" class="btn btn-success"> <i class="bi bi-calendar2-check"></i> Ver las reservas </a>
 
 <!-- Modal -->
 <form action="{{url('/admin/eventos/create')}}" method="post"> 
@@ -245,6 +311,17 @@ document.addEventListener('DOMContentLoaded', function(){
             <div class="form-group">
               <label for="">Hora de reserva</label>
               <input type="time" name="hora_reserva" id="hora_reserva" class="form-control">
+              @error('hora_reserva')
+                        <small style="color:red">{{$message}}</small>
+                      @enderror
+                  @if( (($message = Session::get('hora_reserva'))) )
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function(){
+                      $('#exampleModal').modal('show');
+                    });
+                  </script>
+                  <small style="color:red">{{$message}}</small>
+                  @endif 
               <script>
 document.addEventListener('DOMContentLoaded', function() {
     const horaReservaInput = document.getElementById('hora_reserva');
@@ -287,24 +364,97 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 
+@endcan
+
+@if(Auth::check() && Auth::user()->doctor)
+
+<div class="row">
+          <div class="col-md-12">
+            <div class="card card-outline card-primary">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-6"><h3 class="card-tittle">Calendario de reservas </h3></div>
+                  
+               </div>
+              </div>
+              <div class="card-body">
+                <table id="example1" class="table table-striped table-bordered table-hover table-sm">
+  <thead style="background-color: #c0c0c0">
+    <tr>
+      <td style="text-align: center"><b>Nro</b></td>
+      <td style="text-align: center"><b>Usuario</b></td>
+      <td style="text-align: center"><b>Fecha de reserva</b></td>
+      <td style="text-align: center"><b>Hora de reserva</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php $contador = 1; ?>
+      @foreach($eventos as $evento)
+      @if(Auth::user()->doctor->id == $evento->doctor_id)
+  <tr>
+  <td style="text-align: center">{{$contador++}}</td>
+  <td>{{$evento->user->name}}</td>
+  <td style="text-align: center">{{\Carbon\Carbon::parse($evento->start)->format('Y-m-d')}}</td>
+  <td style="text-align: center">{{\Carbon\Carbon::parse($evento->start)->format('H:i')}}</td>
+</tr>
+@endif
+  @endforeach
+  </tbody>
+</table>
 <script>
+    $(function () {
+        $("#example1").DataTable({
+            "pageLength": 10,
+            "language": {
+                "emptyTable": "No hay información",
+                // Agregamos guiones bajos a las variables: _START_, _END_ y _TOTAL_
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Reservas",
+                "infoEmpty": "Mostrando 0 a 0 de 0 Reservas",
+                // Agregamos guiones bajos a _MAX_
+                "infoFiltered": "(Filtrado de _MAX_ total Reservas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                // Agregamos guiones bajos a _MENU_
+                "lengthMenu": "Mostrar _MENU_ Reservas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscador:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            "responsive": true, 
+            "lengthChange": true, 
+            "autoWidth": false,
+            buttons: [{
+                extend: 'collection',
+                text: 'Reportes',
+                orientation: 'landscape',
+                buttons: [
+                    { text: 'Copiar', extend: 'copy' }, 
+                    { extend: 'pdf' }, 
+                    { extend: 'csv' }, 
+                    { extend: 'excel' }, 
+                    { text: 'Imprimir', extend: 'print' }
+                ]
+            }, {
+                extend: 'colvis',
+                text: 'Visor de columnas',
+                collectionLayout: 'fixed three-column'
+            }],
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+              </div>
+            </div>
+          </div>
+</div>
+</div>
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          locale:'es',
-          events:[
-            {
-              title: '06:00-07:00 Odontologia',
-              start: '2026-04-01',
-              end: '2026-04-01',
-              color: 'green'
-            }
-          ]
-        });
-        calendar.render();
-      });
+@endif
 
-    </script>
 @endsection
