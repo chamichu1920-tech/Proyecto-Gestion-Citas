@@ -10,6 +10,7 @@ use App\Models\Consultorio; // <--- AÑADE ESTA LÍNEA
 use App\Models\Doctor; // <--- AÑADE ESTA LÍNEA
 use App\Models\Horario; // <--- AÑADE ESTA LÍNEA
 use App\Models\Event;
+use App\Models\Configuracione;
 
 class AdminController extends Controller
 {
@@ -21,14 +22,15 @@ class AdminController extends Controller
         $total_doctores = doctor::count();
         $total_horarios = horario::count();
         $total_eventos = Event::count();
-
+        $total_configuraciones = Configuracione::count();
+        
         $consultorios = Consultorio::all();
         $doctores = Doctor::all();
         $eventos = Event:: all();
 
         return view('admin.index', compact('total_usuarios','total_secretarias','total_pacientes',
         'total_consultorios','total_doctores','total_horarios','consultorios','doctores',
-        'eventos','total_eventos'));
+        'eventos','total_eventos','total_configuraciones'));
     } 
 
     public function ver_reservas($id){
